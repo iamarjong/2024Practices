@@ -1,0 +1,26 @@
+  CREATE TABLE users (
+      id INT(11) NOT NULL AUTO_INCREMENT,
+      username VARCHAR(30) NOT NULL,
+      pwd VARCHAR(255) NOT NULL,
+      email VARCHAR(100) NOT NULL, 
+      create_at DATETIME NOT NULL DEFAULT CURRENT_TIME,
+      PRIMARY KEY (id)
+  );
+
+  CREATE TABLE comments (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(30) NOT NULL,
+    comment_text TEXT NOT NULL,
+    create_at DATETIME NOT NULL DEFAULT CURRENT_TIME,
+    users_id INT(11)    ,
+    PRIMARY KEY (id),
+    FOREIGN KEY (users_id) REFERENCES  users (id) ON DELETE SET NULL 
+);
+
+INSERT INTO users (username, pwd, email) VALUES ('penguin', 'penguinXDDDD', 'penguin@gmail.com'); 
+
+UPDATE users SET username = 'penguin2' , pwd = 'penguinXD' WHERE  id = 2; 
+
+DELETE FROM users WHERE id = 1;
+
+SELECT username, email FROM users WHERE id = 3 ;
