@@ -2,8 +2,7 @@
 把原本的 ipynb 一個 cell 裡，檔名中敏感的關鍵字去掉
 '''
 
-
-# https://steam.oxxostudio.tw/category/python/example/pdfplumber.html 
+ # https://steam.oxxostudio.tw/category/python/example/pdfplumber.html 
 ''' 
 conda activate penguin_web
 pip install pdfplumber
@@ -28,7 +27,7 @@ def 篩選標準_parse(篩選標準raw:str):
         v = 篩選標準raw.find(str(i+1)+'.') 
 
         if v>0: 
-            敘述.append(篩選標準raw[2:v]) 
+            敘述.append(篩選標準raw[2:v])  # 前兩個字元是 1. 或 2. 等等
             篩選標準raw = 篩選標準raw[v:]
         else: 
             break 
@@ -79,7 +78,7 @@ for pp in range(26,238):
 
     table_middle = table[2:-1] 
     N = len(table_middle )
-    一頁的資料 = [] 
+    一頁的資料 ={}
 
 
 
@@ -87,8 +86,9 @@ for pp in range(26,238):
     校名 = table[0][0][u+1:] 
     v = 校名.find('(')
     校名=校名[0:v]
-    校名
-
+    
+    if 所有的資料.get(校名,None) == None: 
+        所有的資料[校名]={} 
 
     for now in range(0,N-2 ,5): 
         print('  now=',now)  
@@ -106,10 +106,10 @@ for pp in range(26,238):
             採計.pop(-1) 
         英聽 = table_middle[now+4][1] 
         if 英聽 == '---':
-            英聽=None 
+            英聽='F' 
 
-        一頁的資料.append(     {'校名': 校名 ,'系名':系名, '篩選標準':篩選標準_parse( 篩選標準raw), '採計':採計,'英聽':英聽}  )
+        一頁的資料|=   {系名: { '篩選標準':篩選標準_parse( 篩選標準raw), '採計':採計,'英聽':英聽} }
     一頁的資料, len(一頁的資料) 
-    所有的資料.update({pp:一頁的資料}) 
+    所有的資料[校名]|=一頁的資料
 
 所有的資料
