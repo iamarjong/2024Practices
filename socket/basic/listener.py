@@ -1,10 +1,6 @@
 
-import socket
-HOST, PORT = '192.168.0.198' , 54321 
-# HOST, PORT = '192.168.178.44' , 54321 
-
-server_addr = (HOST, PORT)
-
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.sendto("Book".encode(), server_addr)
-print('a', end = '') 
+import socket 
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s: 
+    s.bind(("0.0.0.0",54321))
+    data, addr = s.recvfrom(1024)
+    print(addr, '說了:',data) 
